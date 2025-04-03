@@ -37,9 +37,24 @@ router.post("/login", async (req, res) => {
         const user = await User.findOne({ where: { email } })
         if (!user) return res.status(401).json({ message: "Пользователь не найден" })
 
+        // проверка на бан
+        if (user.isUserLocked()) return res.status(403).json({ message: `Аккаунт заблокирован`, lockUntil: user.lockUntil })
+
         // проверка пароля
         const isValidPassword = await bcrypt.compare(password, user.password)
-        if (!isValidPassword) return res.status(401).json({ message: "Неверный пароль"})
+        if (!isValidPassword) {
+            // неверный пароль - увеличение неудачных попыток или бан
+            await user.addFailedAttempts()
+            
+            // сообщение если бан
+            if (user.isUserLocked()) return res.status(403).json({ message: "Слишком много неудачных попыток. Аккаунт заблокирован", lockUntil: user.lockUntil })
+            
+            // если еще не бан, то просто ответ
+            return res.status(401).json({ message: `Неверный пароль. Неудачных попыток ${user.failedAttempts} из ${MAX_FAILED_ATTEMPTS}`})
+        }
+
+        // успешный вход - сброс неудачных попыток
+        await user.resetFailedAttempts()
 
         // jwt токен
         const token = jwt.sign(
