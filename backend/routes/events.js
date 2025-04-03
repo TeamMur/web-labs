@@ -1,22 +1,10 @@
-import { Op } from 'sequelize'
 import express from 'express'
 import { Event } from '../models/models.js'
-
+import { verifyToken } from '../middlewares/routes.js';
 const eventRouter = express.Router()
 
-//get events
-eventRouter.get('/', async (req, res) => {
-  try {
-    const { startDate, endDate, } = req.query
-    const events = (startDate && endDate) ? await Event.findAll({where: {date: { [Op.between]: [startDate, endDate] }}}) : await Event.findAll()
-    res.status(200).json(events)
-  } catch (error) {
-    res.status(500).json({ error: `Ошибка при получении мероприятий: ${error}`})
-  }
-})
-
 //get event
-eventRouter.get('/:id', async (req, res) => {
+eventRouter.get('/:id', verifyToken, async (req, res) => {
   try {
     const event = await Event.findByPk(req.params.id)
     if (!event) return res.status(404).json({ error: `Мероприятие с id=${req.params.id} не найдено`})
@@ -27,7 +15,7 @@ eventRouter.get('/:id', async (req, res) => {
 })
 
 //create event
-eventRouter.post('/', async (req, res) => {
+eventRouter.post('/', verifyToken, async (req, res) => {
   try {
     const { title, description, date, createdBy } = req.body
     if (!title || !date || !createdBy) return res.status(400).json({ error: `Отсутствуют поля: ${!title ? 'title ' : ''}${!date ? 'date ' : ''}${!createdBy ? 'createdBy' : ''}`})
@@ -40,7 +28,7 @@ eventRouter.post('/', async (req, res) => {
 })
 
 //update event
-eventRouter.put('/:id', async (req, res) => {
+eventRouter.put('/:id', verifyToken, async (req, res) => {
   try {
     const id = req.params.id
     const event = await Event.findByPk(id)
@@ -55,7 +43,7 @@ eventRouter.put('/:id', async (req, res) => {
 })
 
 //delete event
-eventRouter.delete('/:id', async (req, res) => {
+eventRouter.delete('/:id', verifyToken, async (req, res) => {
   try {
     const id = req.params.id
     const event = await Event.findByPk(id)
