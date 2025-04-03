@@ -1,10 +1,14 @@
 import userRouter from './users.js'
 import eventRouter from './events.js'
+import passport from 'passport'
 import morgan from 'morgan'
 
 const logFormat = '[:method] :url'
 userRouter.use(morgan(logFormat))
 eventRouter.use(morgan(logFormat))
+
+userRouter.use(passport.authenticate("jwt", { session: false }))
+eventRouter.use(passport.authenticate("jwt", { session: false }))
 
 export { eventRouter, userRouter }
 

@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import { sequelize } from "../config/db.js";
 
-export const Event = sequelize.define("event", {
+export const Event = sequelize.define("events", {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -36,7 +36,7 @@ export const Event = sequelize.define("event", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'user',
+            model: 'users',
             key: 'id'
         }
     }
