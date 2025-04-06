@@ -5,7 +5,7 @@ import {
 } from 'passport-jwt';
 import passport from 'passport';
 import dotenv from 'dotenv';
-import { User } from '../models/user';
+import { User } from '@models/user';
 import { DoneCallback } from 'passport';
 
 dotenv.config();

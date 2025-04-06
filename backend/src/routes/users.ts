@@ -1,6 +1,6 @@
 import express, { Request, Response, Router, RequestHandler } from 'express';
-import { User } from '../models/models';
-import { verifyToken } from '../middlewares/routes';
+import { User } from '@models/models';
+import { verifyToken } from '@middlewares/routes';
 const userRouter: Router = express.Router();
 
 //get users

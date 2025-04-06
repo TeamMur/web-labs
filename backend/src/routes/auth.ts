@@ -1,11 +1,11 @@
 import express, { Request, Response, RequestHandler } from 'express';
-import { User } from '../models/user';
+import { User } from '@models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { MAX_FAILED_ATTEMPTS } from '../models/user';
+import { MAX_FAILED_ATTEMPTS } from '@models/user';
 
 const router = express.Router();
 

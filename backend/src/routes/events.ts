@@ -1,6 +1,6 @@
 import express, { Request, Response, Router, RequestHandler } from 'express';
-import { Event } from '../models/models';
-import { verifyToken } from '../middlewares/routes';
+import { Event } from '@models/models';
+import { verifyToken } from '@middlewares/routes';
 
 const eventRouter: Router = express.Router();
 

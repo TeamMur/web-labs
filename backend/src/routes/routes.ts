@@ -1,7 +1,7 @@
-import userRouter from './users';
-import eventRouter from './events';
+import userRouter from '@routes/users';
+import eventRouter from '@routes/events';
 import morgan from 'morgan';
-import { verifyToken } from '../middlewares/routes';
+import { verifyToken } from '@middlewares/routes';
 
 const logFormat = '[:method] :url';
 userRouter.use(morgan(logFormat));

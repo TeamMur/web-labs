@@ -1,5 +1,5 @@
 import express, { Request, Response, RequestHandler } from 'express';
-import { Event } from '../models/event';
+import { Event } from '@models/event';
 import { Op } from 'sequelize';
 
 interface EventsQuery {

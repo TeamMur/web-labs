@@ -1,5 +1,5 @@
-import { User } from './user';
-import { Event } from './event';
+import { User } from '@models/user';
+import { Event } from '@models/event';
 import { Model } from 'sequelize';
 
 interface UserModel extends Model {

@@ -2,14 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import { sequelize } from './config/db';
+import { sequelize } from '@config/db';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import authRoutes from './routes/auth';
-import publicRoutes from './routes/public';
-import { userRouter, eventRouter } from './routes/routes';
-import './config/passport'; // Импортируем конфигурацию passport
+import authRoutes from '@routes/auth';
+import publicRoutes from '@routes/public';
+import { userRouter, eventRouter } from '@routes/routes';
+import '@config/passport'; // Импортируем конфигурацию passport
 import { Request } from 'express';
 
 interface RateLimitRequest extends Request {

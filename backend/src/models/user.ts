@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../config/db';
+import { sequelize } from '@config/db';
 import bcrypt from 'bcrypt';
 
 export const MAX_FAILED_ATTEMPTS = 5;
