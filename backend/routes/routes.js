@@ -12,6 +12,143 @@ eventRouter.use(passport.authenticate("jwt", { session: false }))
 
 export { eventRouter, userRouter }
 
+
+
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     tags:
+ *       - auth
+ *     summary: Регистрация
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - name
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+  *               name:
+ *                 type: string
+  *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Успешная регистрация
+ *       400:
+ *         description: Ошибка валидации или email уже существует
+ *       500:
+ *         description: Ошибка сервера
+ */
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     tags:
+ *       - auth
+ *     summary: Авторизация
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               password:
+ *                  type: string
+ *     responses:
+ *       201:
+ *         description: Успешная авторизация
+ *       400:
+ *         description: Ошибка валидации или email не существует
+ *       500:
+ *         description: Ошибка сервера
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *         - password
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: Уникальный идентификатор
+ *         name:
+ *           type: string
+ *           description: Имя
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Email (уникальный)
+ *         password:
+ *           type: string
+ *           description: Пароль (Хешированный)
+ */
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     tags:
+ *       - users
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Получить список пользователей
+ *     responses:
+ *       200:
+ *         description: Список пользователей
+ *       500:
+ *         description: Ошибка сервера
+ *   post:
+ *     tags:
+ *         - users
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Создать пользователя
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *     responses:
+ *       201:
+ *         description: Пользователь создан
+ *       400:
+ *         description: Ошибка валидации или email уже существует
+ *       500:
+ *         description: Ошибка сервера
+ */
+
+
 /**
  * @swagger
  * components:
@@ -45,6 +182,8 @@ export { eventRouter, userRouter }
  * @swagger
  * /events:
  *   get:
+ *     tags:
+ *         - events
  *     summary: Получить список мероприятий
  *     parameters:
  *       - name: startDate
@@ -65,6 +204,10 @@ export { eventRouter, userRouter }
  *       500:
  *         description: Ошибка сервера
  *   post:
+ *     tags:
+ *       - events
+ *     security:
+ *       - bearerAuth: []
  *     summary: Создать мероприятие
  *     requestBody:
  *       required: true
@@ -99,6 +242,10 @@ export { eventRouter, userRouter }
  * @swagger
  * /events/{id}:
  *   get:
+ *     tags:
+ *       - events
+ *     security:
+ *       - bearerAuth: []
  *     summary: Получить мероприятие по ID
  *     parameters:
  *       - name: id
@@ -112,6 +259,10 @@ export { eventRouter, userRouter }
  *       404:
  *         description: Мероприятие не найдено
  *   put:
+ *     tags:
+ *       - events
+ *     security:
+ *       - bearerAuth: []
  *     summary: Обновить мероприятие
  *     parameters:
  *       - name: id
@@ -141,6 +292,10 @@ export { eventRouter, userRouter }
  *       404:
  *         description: Мероприятие не найдено
  *   delete:
+ *     tags:
+ *       - events
+ *     security:
+ *       - bearerAuth: []
  *     summary: Удалить мероприятие
  *     parameters:
  *       - name: id
@@ -154,61 +309,3 @@ export { eventRouter, userRouter }
  *       404:
  *         description: Мероприятие не найдено
  */ 
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       required:
- *         - name
- *         - email
- *       properties:
- *         id:
- *           type: integer
- *           description: Уникальный идентификатор
- *         name:
- *           type: string
- *           description: Имя
- *         email:
- *           type: string
- *           format: email
- *           description: Email (уникальный)
- */
-
-/**
- * @swagger
- * /users:
- *   get:
- *     summary: Получить список пользователей
- *     responses:
- *       200:
- *         description: Список пользователей
- *       500:
- *         description: Ошибка сервера
- *   post:
- *     summary: Создать пользователя
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - name
- *               - email
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *     responses:
- *       201:
- *         description: Пользователь создан
- *       400:
- *         description: Ошибка валидации или email уже существует
- *       500:
- *         description: Ошибка сервера
- */
