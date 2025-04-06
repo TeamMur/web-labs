@@ -1,16 +1,16 @@
-import userRouter from './users.js'
-import eventRouter from './events.js'
-import passport from 'passport'
-import morgan from 'morgan'
+import userRouter from './users';
+import eventRouter from './events';
+import morgan from 'morgan';
+import { verifyToken } from '../middlewares/routes';
 
-const logFormat = '[:method] :url'
-userRouter.use(morgan(logFormat))
-eventRouter.use(morgan(logFormat))
+const logFormat = '[:method] :url';
+userRouter.use(morgan(logFormat));
+eventRouter.use(morgan(logFormat));
 
-userRouter.use(passport.authenticate("jwt", { session: false }))
-eventRouter.use(passport.authenticate("jwt", { session: false }))
+userRouter.use(verifyToken);
+eventRouter.use(verifyToken);
 
-export { eventRouter, userRouter }
+export { eventRouter, userRouter };
 
 
 
@@ -133,12 +133,15 @@ export { eventRouter, userRouter }
  *             required:
  *               - name
  *               - email
+ *               - password
  *             properties:
  *               name:
  *                 type: string
  *               email:
  *                 type: string
  *                 format: email
+*               password:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Пользователь создан
@@ -308,4 +311,4 @@ export { eventRouter, userRouter }
  *         description: Мероприятие удалено
  *       404:
  *         description: Мероприятие не найдено
- */ 
+ */
