@@ -28,7 +28,30 @@ const swaggerDocs = swaggerJsdoc({
     definition: {
         openapi: '3.0.0',
         info: { title: 'Events API', description: 'API для управления мероприятиями'},
-        servers: [{url: `http://localhost:5000`}]
+        servers: [{url: `http://localhost:5000`}],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT'
+                }
+            }
+        },
+        tags: [
+            {
+                name: 'auth',
+                description: 'Вход',
+            },
+            {
+              name: 'users',
+              description: 'Пользователи',
+            },
+            {
+              name: 'events',
+              description: 'События',
+            },
+          ],
     },
     apis: ['./routes/*.js']
 })
